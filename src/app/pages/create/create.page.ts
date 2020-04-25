@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router'
 import { User } from '../../models/user'
 import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
+import { ToastController, LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service'
 @Component({
   selector: 'app-create',
@@ -12,7 +13,11 @@ import { AuthService } from 'src/app/services/auth.service'
 export class CreatePage implements OnInit {
   public myForm: FormGroup;
   user: User = new User();
-  constructor(private router: Router, private auth: AuthService, private form: FormBuilder) { }
+  constructor(private router: Router, 
+              private auth: AuthService, 
+              private form: FormBuilder,
+              public toaster:ToastController,
+              public loader:LoadingController) { }
 
   ngOnInit() {
     this.validations();
@@ -31,11 +36,29 @@ export class CreatePage implements OnInit {
   async registration() {
     const user = await this.auth.createUser(this.user);
     if (this.user) {
-      console.log('cread');
+      this.LoadPag();
+      this.createToast()
       this.router.navigateByUrl('/tabs/tab1');
     }
   }
   redirectLogin(){
     this.router.navigateByUrl('/login');
+  }
+  async createToast() {
+    const toast = await this.toaster.create({
+      message: 'Login correcto',
+      duration: 500
+    });
+    toast.present();
+  }
+  async LoadPag() {
+    const loading = await this.loader.create({
+      message: 'Por favor,espera',
+      duration: 2000,
+    });
+    this.createToast();
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 }

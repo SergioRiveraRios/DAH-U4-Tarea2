@@ -57,7 +57,8 @@ export class LoginPage implements OnInit {
   async Login() {
     const user= await this.auths.signInEmail(this.user);
     if(this.user){
-      console.log('asd')
+      this.LoadPag();
+      this.createToast();
       this.router.navigateByUrl('/tabs/tab1');
     }
     else{
