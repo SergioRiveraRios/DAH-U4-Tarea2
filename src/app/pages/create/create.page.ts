@@ -34,11 +34,11 @@ export class CreatePage implements OnInit {
     });
   }
   async registration() {
-    const user = await this.auth.createUser(this.user);
-    if (this.user) {
+    const user = this.auth.createUser(this.user);
+    if (user) {
       this.LoadPag();
       this.createToast()
-      this.router.navigateByUrl('/tabs/tab1');
+      this.router.navigateByUrl('/login')
     }
   }
   redirectLogin(){
