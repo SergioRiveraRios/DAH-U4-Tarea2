@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service'
 
 import { User } from 'src/app/models/user'
 import { Router } from '@angular/router'
-import { ToastController, LoadingController,AlertController } from '@ionic/angular';
+import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { async } from '@angular/core/testing';
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
     public router: Router,
     public toaster: ToastController,
     public load: LoadingController,
-    public alert:AlertController) { }
+    public alert: AlertController) { }
 
   ngOnInit() {
     this.validations();
@@ -56,24 +56,24 @@ export class LoginPage implements OnInit {
   }
 
   async Login() {
-    const user= await this.auths.signInEmail(this.user);
-    if(user){
+    const user = await this.auths.signInEmail(this.user);
+    if (this.user) {
       this.LoadPag();
       this.createToast();
       this.router.navigateByUrl('../../tabs');
     }
-    else{
+    else {
       const alert = await this.alert.create({
         header: 'Datos incorrectos',
-        message:'Datos introducidos erroneos',
-        buttons:[{
-          text:'Salir'
+        message: 'Datos introducidos erroneos',
+        buttons: [{
+          text: 'Salir'
         }]
       });
       await alert.present();
     }
   }
-  redirectCreate(){
+  redirectCreate() {
     this.router.navigateByUrl('/create')
   }
 }

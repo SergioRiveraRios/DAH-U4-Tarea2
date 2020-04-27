@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth'
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth'
 import { auth } from 'firebase/app'
 import { User } from 'src/app/models/user'
 @Injectable({
@@ -7,13 +7,15 @@ import { User } from 'src/app/models/user'
 })
 export class AuthService {
   public isLogged: any = false;
-  constructor(public af: AngularFireAuth, public auth:AngularFireAuth) {
+  constructor(public af: AngularFireAuth, public auth: AngularFireAuth, public mm: AngularFireAuthModule) {
     this.af.authState.subscribe(user => (this.isLogged = user));
   }
-
-  async createUser(user: User) {
-      return  this.af.createUserWithEmailAndPassword(user.email, user.pass)
-      .catch(function(error) {
+  getUser(){
+    
+  }
+  createUser(user: User) {
+    this.af.createUserWithEmailAndPassword(user.email, user.pass)
+      .catch(function (error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;

@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service'
 export class CreatePage implements OnInit {
   public myForm: FormGroup;
   user: User = new User();
+  email;password;
   constructor(private router: Router, 
               private auth: AuthService, 
               private form: FormBuilder,
@@ -33,12 +34,17 @@ export class CreatePage implements OnInit {
       ])]
     });
   }
-  async registration() {
-    const user = this.auth.createUser(this.user);
-    if (user) {
+  getUser(){
+    this.user.email=this.myForm.get('email').value;
+    this.user.pass=this.myForm.get('password').value;
+  }
+  registration() {
+    this.getUser();
+    const user =  this.auth.createUser(this.user)
+    if (this.user) {
       this.LoadPag();
       this.createToast()
-      this.router.navigateByUrl('/login')
+      this.router.navigateByUrl('./tabs')
     }
   }
   redirectLogin(){
