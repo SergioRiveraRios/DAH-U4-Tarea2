@@ -26,7 +26,6 @@ export class AuthService {
   signInEmail(user: User) {
     this.af.signInWithEmailAndPassword(user.email, user.pass)
       .catch(function (error) {
-
       })
   }
 }

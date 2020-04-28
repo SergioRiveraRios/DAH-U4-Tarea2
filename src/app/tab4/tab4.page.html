@@ -13,25 +13,32 @@
             <ion-icon name="checkmark"></ion-icon>
         </ion-item-option>
         </ion-item-options>
+        <div *ngIf='!student.active'>
         <ion-item>
           <ion-label>
             <h2>
               <strong>{{student.name}}</strong>
-              <ion-chip color="secondary" *ngIf='student.active' class="ion-flat-right">
-                <ion-label>Activo</ion-label>
-              </ion-chip>
               <ion-chip color="secondary" *ngIf='!student.active' class="ion-flat-right">
-                <ion-label>Inactivo</ion-label>
+                <ion-label>Activo</ion-label>
               </ion-chip>
             </h2>
             <h3>{{student.controlnumber}}</h3>
+            <div>
+              <h3>{{student.curp}}</h3>
+              <h3>{{student.age}}</h3>
+            </div>
           </ion-label>
+          <ion-button (click)="age(student)" expand="block" color="primary" shape="round">
+            ver más
+          </ion-button>
+          
         </ion-item>
         <ion-item-options side="end">
           <ion-item-option color="danger">
             <ion-icon name="close"></ion-icon>
         </ion-item-option>
         </ion-item-options>
+      </div>
       </ion-item-sliding>
     </ion-list>
   </ion-list>

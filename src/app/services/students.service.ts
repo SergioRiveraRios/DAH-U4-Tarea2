@@ -10,4 +10,7 @@ export class StudentsService {
   createStudent(student: Estudiante) {
     return this.firestore.collection('students').add(student);
   }
+  getStudents(){
+    return this.firestore.collection('students').snapshotChanges();
+  }
 }

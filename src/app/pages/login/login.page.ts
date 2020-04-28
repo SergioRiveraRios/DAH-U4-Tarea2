@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service'
 import { User } from 'src/app/models/user'
 import { Router } from '@angular/router'
 import { ToastController, LoadingController, AlertController } from '@ionic/angular';
-import { async } from '@angular/core/testing';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth'
 
 @Component({
   selector: 'app-login',
@@ -15,13 +15,18 @@ import { async } from '@angular/core/testing';
 export class LoginPage implements OnInit {
   public myForm: FormGroup;
   user: User = new User();
+  user2: User = new User();
+  public isLogged: any = false;
   constructor(
     private auths: AuthService,
+    public auser: AngularFireAuth,
     private fb: FormBuilder,
     public router: Router,
     public toaster: ToastController,
     public load: LoadingController,
-    public alert: AlertController) { }
+    public alert: AlertController) {
+      this.auser.authState.subscribe(user => (this.isLogged = user));
+     }
 
   ngOnInit() {
     this.validations();
@@ -54,13 +59,17 @@ export class LoginPage implements OnInit {
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
   }
-
+  getUser(){
+    this.user.email=this.myForm.get('email').value;
+    this.user.pass=this.myForm.get('password').value;
+  }
+  
   async Login() {
     const user = await this.auths.signInEmail(this.user);
     if (this.user) {
       this.LoadPag();
       this.createToast();
-      this.router.navigateByUrl('../../tabs');
+      this.router.navigate(['/tabs']);
     }
     else {
       const alert = await this.alert.create({

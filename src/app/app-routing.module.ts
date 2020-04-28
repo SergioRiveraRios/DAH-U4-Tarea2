@@ -6,16 +6,20 @@ const routes: Routes = [
     path:'',redirectTo:'login',pathMatch:'full'
   },
   {
-    path: 'tabs',
+    path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'create',
-    loadChildren: () => import('./pages/create/create.module').then( m => m.CreatePageModule)
+    loadChildren: () => import('./pages/create/create.module').then(m => m.CreatePageModule)
+  },
+  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
   }
 ];
 @NgModule({
@@ -24,4 +28,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
