@@ -21,4 +21,9 @@ export class Tab2Page {
       });
     });
   }
+
+  updateStudent(student:Estudiante,active:boolean){
+    student.active=active;
+    this.service.updateStudent(student,student.id);
+  }
 }
